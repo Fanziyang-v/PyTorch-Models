@@ -65,9 +65,7 @@ class DepthwiseSaparableConv2d(nn.Module):
 class MobileNetV1(nn.Module):
     """MobileNet V1."""
 
-    def __init__(
-        self, num_channles: int, num_classes: int, alpha: float = 1.0, beta: float = 1.0
-    ) -> None:
+    def __init__(self, num_channles: int, num_classes: int) -> None:
         super(MobileNetV1, self).__init__()
         self.conv1 = nn.Conv2d(num_channles, 32, kernel_size=3, stride=2, padding=1)
         self.bn1 = nn.BatchNorm2d(32)
@@ -96,8 +94,8 @@ class MobileNetV1(nn.Module):
                 )
             ),
             nn.Flatten(),
-            nn.Linear(1024, 1000),
+            nn.Linear(1024, num_classes),
         )
-    
+
     def forward(self, images: Tensor):
         return self.model(images)
